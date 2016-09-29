@@ -1,14 +1,18 @@
 import pickle
 from os.path import exists
 
-if exists("elite_phonebook.pickle"):
-    phonebook_file = open("elite_phonebook.pickle", "r")
+file_name = "elite_phonebook.pickle"
+
+if exists(file_name):
+    phonebook_file = open(file_name, "r")
     phonebook_dict = pickle.load(phonebook_file)
     phonebook_file.close()
+    print "Loading file..."
 else:
     phonebook_dict = []
+    print "Creating new file..."
 
-def get_phonenumber():
+def lookup_entry():
     for index in range(0, len(phonebook_dict)):
         is_found = False
         if phonebook_dict[index]["name"] == name:
@@ -24,7 +28,7 @@ def get_phonenumber():
     else:
         pass
 
-def add_new_contact():
+def add_new_entry():
     email = raw_input("Email? ")
     work_number = raw_input("Work number? ")
     home_number = raw_input("Home number? ")
@@ -37,7 +41,7 @@ def add_new_contact():
     # print "Cell Number: %s" % cell_number
     print "Entry stored for %s." % name
 
-def delete_contact():
+def delete_entry():
     for index in range(0, len(phonebook_dict)):
         is_found = False
         # print index
@@ -61,8 +65,8 @@ def print_all_entries():
         print "Home Number: %s" % phonebook_dict[index]["phone"]["home"]
         print "Cell Number: %s \n" % phonebook_dict[index]["phone"]["cell"]
 
-def save_session():
-    phonebook_file = open("elite_phonebook.pickle", "w")
+def save_entry():
+    phonebook_file = open(file_name, "w")
     pickle.dump(phonebook_dict, phonebook_file)
     phonebook_file.close()
 
@@ -70,12 +74,12 @@ while True:
     print "\nElectronic Phone Book"
     print "====================="
 
-    print "1\. Look up an entry"
-    print "2\. Set an entry"
-    print "3\. Delete an entry"
-    print "4\. List all entries"
-    print "5\. Save"
-    print "6\. Quit"
+    print "1. Look up an entry"
+    print "2. Set an entry"
+    print "3. Delete an entry"
+    print "4. List all entries"
+    print "5. Save"
+    print "6. Quit"
 
     choice = int(raw_input("What do you want to do? "))
 
@@ -84,18 +88,18 @@ while True:
             name = raw_input("Name? ").lower()
             if choice == 1:
                 # retrieve phonenumber
-                get_phonenumber()
+                lookup_entry()
             elif choice == 2:
                 # store new contact
-                add_new_contact()
+                add_new_entry()
             elif choice == 3:
-                delete_contact()
+                delete_entry()
         else:
             if choice == 4:
                 # print all entries in the phonebook
                 print_all_entries()
             elif choice == 5:
-                save_session()
+                save_entry()
             else:
                 print "Bye"
                 break
